@@ -25,16 +25,16 @@ syn include @razorHtml syntax/html.vim
 syn region razorCsharpBlock matchGroup=Comment contained start="(" end=")\s*" contains=@razorCsharp,razorCsharpBlock,razorCsharpKeyword,razorCsharpBlockLong,razorCsharpBlockShort
 syn region razorCsharpBlock matchGroup=Comment contained start="{" end="}\s*" contains=@razorCsharp,razorCsharpBlock,@razorHtml,razorCsharpKeyword,razorInnerHtmlBlock
 syn region razorCsharpBlock matchGroup=Comment contained start="[[]" end="[]]\s*" contains=@razorCsharp,razorCsharpBlock,@htmlCss,@htmlJavaScript,@razorHtml,razorCsharpKeyword
-syn region razorCsharpBlockShort matchGroup=razorStatement start="@" end="\s\|["]\|<"me=e-1 contains=@razorCsharp,razorCsharpBlock,razorCsharpKeyword containedin=htmlString,@htmlJavaScript,@htmlCss
+syn region razorCsharpBlockShort matchGroup=razorStatement start="@" end="\n\|\s\|["]\|<"me=e-1 contains=@razorCsharp,razorCsharpBlock,razorCsharpKeyword containedin=htmlString,@htmlJavaScript,@htmlCss
 syn match razorCsharpBlockLong "@\(using\|if\|foreach\|for\)\s*" nextgroup=razorCsharpBlockLongParam containedin=htmlString,@htmlJavaScript,@htmlCss
-syn region razorCsharpBlockLongParam matchGroup=Comment contained start="(" end=")\s*" contains=@razorCsharp,razorCsharpBlock,razorCsharpKeyword nextGroup=razorCsharpBlock
+syn region razorCsharpBlockLongParam matchGroup=Comment contained start="(" end=")\s*\n\?\s*" contains=@razorCsharp,razorCsharpBlock,razorCsharpKeyword nextGroup=razorCsharpBlock
 "syn region razorCsharpBlock matchGroup=razorStatement start="@" end="\s\|["]\|<"me=e-1 contains=razorCsharpKeyword containedin=htmlString,@htmlJavaScript,@htmlCss
 "syn match razorCsharpKeyword contained containedin=razorCsharpBlock "[a-zA-Z0-9.-]"
 "syn match razorCsharpKeyword contained containedin=htmlTag "[a-zA-Z0-9.-]"
 "hi link razorCsharpKeyword SpecialComment
-syntax region razorHtml start="@<[^>]*>" end="@</[^>]>" contains=@razorHtml containedin=@razorSharp,razorCsharpBlock
+syntax region razorHtml start="@<\z\([a-z]\w*\)" end="</\z1>\|\(<\z1[^>]*\)\@<=\(/>\)" extend keepend contains=@razorHtml containedin=@razorSharp,razorCsharpBlock
 syntax region razorInnerCsBlock start="{" end="}" containedin=@razorCsharpBlock,@razorCsharp
-syntax region razorInnerHtmlBlock start="\(<\z\(\w\+\)\)" end="\(<\/\z1[^"]*>\(\s\|\n\)\+\)" keepend extend contains=@htmlCss,@htmlJavaScript,@razorHtml,razorCsharpBlockLong,razorCsharpBlockShort,razorInnerHtmlBlock
+syntax region razorInnerHtmlBlock start="\(<\z\([a-z]\w\+\)\)" end="\(</\z1[^>]*>\(\s\|\n\)\+\)\|\(<\z1[^>]*\)\@<=\(/>\)" keepend extend contains=@htmlCss,@htmlJavaScript,@razorHtml,razorCsharpBlockLong,razorCsharpBlockShort,razorInnerHtmlBlock
 
 syntax region razorComment matchGroup=razorComment start="@[*]" end="[*]@" contains=razorCommentPart,razorCommentError containedin=ALL keepend
 syntax match razorCommentError contained "[^*@]"
@@ -44,7 +44,7 @@ hi link razorCommentPart razorComment
 hi link razorComment Comment
 
 syn region razorSection matchGroup=razorStatement start="^\s*@section\s*\w*\s{" end="}" contains=TOP
-syn match razorModel "^\s*@model\s*[a-zA-Z0-9-.]*"
+syn match razorModel "^\s*@model\s*[a-zA-Z0-9-.<>]*"
 syn region razorCsharpBlock matchGroup=razorStatement start="@{" end="}" contains=@razorCsharp,razorCsharpBlockText,razorCsharpKeyword,razorInnerCsBlock
 hi link razorCsharpBlockLong razorStatement
 hi link razorStatement SpecialComment
