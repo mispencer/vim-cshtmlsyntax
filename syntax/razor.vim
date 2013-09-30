@@ -38,7 +38,7 @@ syntax region razorHtml start="@<\z\([a-z]\w*\)" end="</\z1>\|\(<\z1[^>]*\)\@<=\
 syntax region razorInnerCsBlock start="{" end="}" extend keepend containedin=@razorCsharpBlock,@razorCsharp,razorInnerCsBlock contains=razorInnerHtmlBlock
 syntax region razorInnerHtmlBlock start="\(<\z\(bool\|byte\|sbyte\|char\|decimal\|double\|float\|int\|uint\|long\|ulong\|object\|short\|ushort\|string\)\@!\([a-z]\w\+\)\)" end="\(</\z1[^>]*>\)\|\(<\z1[^>]*\)\@<=\(/>\)" extend keepend contains=@htmlCss,@htmlJavaScript,@razorHtml,razorCsharpBlockLong,razorCsharpBlockShort,razorInnerHtmlBlock
 
-syntax region razorComment matchGroup=razorComment start="@[*]" end="[*]@" contains=razorCommentPart,razorCommentError containedin=ALL keepend
+syntax region razorComment matchGroup=razorComment start="@[*]" end="[*]@" contains=razorCommentPart,razorCommentError containedin=ALL keepend extend
 syntax match razorCommentError contained "[^*@]"
 syntax match razorCommentPart  contained "[*][^@]"
 hi link razorCommentError  razorComment
