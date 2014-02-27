@@ -18,7 +18,6 @@ unlet! b:current_syntax
 runtime! syntax/html.vim
 unlet! b:current_syntax
 
-
 syn include @razorCsharp syntax/cs.vim
 syn include @razorHtml syntax/html.vim
 "syn match razorCsharpString matchGroup=String +"([^"]|\\")*\"+
