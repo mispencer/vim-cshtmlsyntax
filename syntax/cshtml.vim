@@ -26,6 +26,7 @@ syn region cshtmlInnerHtmlBlock start="\C\(<\(bool\|byte\|sbyte\|char\|decimal\|
 
 syn region cshtmlInnerRazor matchGroup=cshtmlStatement contained start="{" end="}\_s*" contains=@csHtmlContainedInRazor containedin=NONE extend keepend
 syn region cshtmlInnerRazorIf matchGroup=cshtmlStatement contained start="{" end="}\_s*" contains=@csHtmlContainedInRazor nextgroup=cshtmlCsharpBlockLongElse containedin=NONE extend keepend
+syn region cshtmlInnerRazorTry matchGroup=cshtmlStatement contained start="{" end="}\_s*" contains=@csHtmlContainedInRazor nextgroup=cshtmlCsharpBlockLongCatch,cshtmlCsharpBlockLongFinally containedin=NONE extend keepend
 syn region cshtmlCsharpBlock matchGroup=cshtmlStatement contained containedin=cshtmlCsharpBlock start="(" end=")\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock extend keepend
 syn region cshtmlCsharpBlock matchGroup=cshtmlStatement contained containedin=cshtmlCsharpBlock start="{" end="}\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock extend keepend
 syn region cshtmlCsharpBlock matchGroup=cshtmlStatement contained containedin=cshtmlCsharpBlock start="[[]" end="[]]\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock extend keepend
@@ -34,8 +35,12 @@ syn match cshtmlCsharpBlockLong "@\(using\|foreach\|for\)\s*" nextgroup=cshtmlCs
 syn match cshtmlCsharpBlockLongIf "@if\s*" nextgroup=cshtmlCsharpBlockLongIfParam containedin=@cshtmlContainingRazor
 syn match cshtmlCsharpBlockLongElse "\_s*else\_s*" nextgroup=cshtmlInnerRazor,cshtmlCsharpBlockLongElseContinuation contained containedin=NONE
 syn match cshtmlCsharpBlockLongElseContinuation  "if\s*" nextgroup=cshtmlCsharpBlockLongIfParam contained containedin=NONE
+syn match cshtmlCsharpBlockLongTry "@try\s*" nextgroup=cshtmlInnerRazorTry containedin=@cshtmlContainingRazor
+syn match cshtmlCsharpBlockLongCatch "\_s*catch\_s*" nextgroup=cshtmlInnerRazor,cshtmlCsharpBlockLongTryParam contained containedin=NONE
+syn match cshtmlCsharpBlockLongFinally "\_s*finally\_s*" nextgroup=cshtmlInnerRazor contained containedin=NONE
 syn region cshtmlCsharpBlockLongParam matchGroup=cshtmlStatement contained start="(" end=")\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock nextgroup=cshtmlInnerRazor containedin=NONE extend keepend
 syn region cshtmlCsharpBlockLongIfParam matchGroup=cshtmlStatement contained start="(" end=")\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock nextgroup=cshtmlInnerRazorIf containedin=NONE extend keepend
+syn region cshtmlCsharpBlockLongTryParam matchGroup=cshtmlStatement contained start="(" end=")\_s*" contains=@cshtmlCsharp,cshtmlCsharpBlock nextgroup=cshtmlInnerRazorTry containedin=NONE extend keepend
 syn region cshtmlHtml matchGroup=cshtmlStatement contained containedin=cshtmlInnerRazor,cshtmlInnerRazorIf start="<text>" end="</text>" contains=@cshtmlCsharp,@cshtmlJavascript
 syn region cshtmlHtml matchGroup=cshtmlStatement contained containedin=cshtmlInnerRazor,cshtmlInnerRazorIf start="@:" end="\n" contains=@cshtmlCsharp,@cshtmlJavascript
 syn region cshtmlCsharpBlock matchGroup=cshtmlStatement start="@{" end="}" containedin=cshtmlContainingRazor contains=@cshtmlContainedInRazor
@@ -50,6 +55,7 @@ syn cluster cshtmlJsContainedInRazor contains=@cshtmlJsCsharp,cshtmlJsCsharpBloc
 
 syn region cshtmlJsInnerRazor matchGroup=cshtmlJsStatement contained start="{" end="}\_s*" contains=@cshtmlJsContainingRazor containedin=NONE
 syn region cshtmlJsInnerRazorIf matchGroup=cshtmlJsStatement contained start="{" end="}\_s*" contains=@cshtmlJsContainingRazor nextgroup=cshtmlJsCsharpBlockLongElse containedin=NONE
+syn region cshtmlJsInnerRazorTry matchGroup=cshtmlJsStatement contained start="{" end="}\_s*" contains=@cshtmlJsContainingRazor nextgroup=cshtmlJsCsharpBlockLongCatch,cshtmlJsCsharpBlockLongFinally containedin=NONE
 syn region cshtmlJsCsharpBlock matchGroup=cshtmlJsStatement contained containedin=cshtmlJsCsharpBlock start="(" end=")\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock
 syn region cshtmlJsCsharpBlock matchGroup=cshtmlJsStatement contained containedin=cshtmlJsCsharpBlock start="{" end="}\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock
 syn region cshtmlJsCsharpBlock matchGroup=cshtmlJsStatement contained containedin=cshtmlJsCsharpBlock start="[[]" end="[]]\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock
@@ -58,8 +64,12 @@ syn match cshtmlJsCsharpBlockLong "@\(using\|foreach\|for\)\s*" nextgroup=cshtml
 syn match cshtmlJsCsharpBlockLongIf "@if\s*" nextgroup=cshtmlJsCsharpBlockLongIfParam contained containedin=@cshtmlJsContainingRazor
 syn match cshtmlJsCsharpBlockLongElse "\_s*else\_s*" nextgroup=cshtmlJsInnerRazorIf,cshtmlJsCsharpBlockLongElseContinuation contained containedin=NONE
 syn match cshtmlJsCsharpBlockLongElseContinuation  "if\s*" nextgroup=cshtmlJsCsharpBlockLongIfParam contained containedin=NONE
+syn match cshtmlJsCsharpBlockLongTry "@try\s*" nextgroup=cshtmlJsInnerRazorTry containedin=@cshtmlJsContainingRazor
+syn match cshtmlJsCsharpBlockLongCatch "\_s*catch\_s*" nextgroup=cshtmlJsInnerRazor,cshtmlJsCsharpBlockLongTryParam contained containedin=NONE
+syn match cshtmlJsCsharpBlockLongFinally "\_s*finally\_s*" nextgroup=cshtmlJsInnerRazor contained containedin=NONE
 syn region cshtmlJsCsharpBlockLongIfParam matchGroup=cshtmlJsStatement contained start="(" end=")\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock nextgroup=cshtmlJsInnerRazorIf
 syn region cshtmlJsCsharpBlockLongParam matchGroup=cshtmlJsStatement contained start="(" end=")\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock nextgroup=cshtmlJsInnerRazor
+syn region cshtmlJsCsharpBlockLongTryParam matchGroup=cshtmlJsStatement contained start="(" end=")\_s*" contains=@cshtmlJsCsharp,cshtmlJsCsharpBlock nextgroup=cshtmlJsInnerRazorTry containedin=NONE extend keepend
 syn region cshtmlJsHtml matchGroup=cshtmlJsStatement contained containedin=cshtmlJsInnerRazor,cshtmlJsInnerRazorIf start="<text>" end="</text>" contains=@cshtmlJsCsharp,@cshtmlJavascript
 syn region cshtmlJsHtml matchGroup=cshtmlJsStatement contained containedin=cshtmlJsInnerRazor,cshtmlJsInnerRazorIf start="@:" end="\n" contains=@cshtmlJsCsharp,@cshtmlJavascript
 syn region cshtmlJsCsharpBlock matchGroup=cshtmlJsStatement start="@{" end="}" contained containedin=@cshtmlJsContainingRazor contains=@cshtmlJsContainedInRazor
@@ -71,6 +81,9 @@ hi link cshtmlCsharpBlockLong cshtmlStatement
 hi link cshtmlCsharpBlockLongIf cshtmlStatement
 hi link cshtmlCsharpBlockLongElse cshtmlStatement
 hi link cshtmlCsharpBlockLongElseContinuation cshtmlStatement
+hi link cshtmlCsharpBlockLongTry cshtmlStatement
+hi link cshtmlCsharpBlockLongCatch cshtmlStatement
+hi link cshtmlCsharpBlockLongFinally cshtmlStatement
 hi link cshtmlSection cshtmlStatement
 hi link cshtmlModel cshtmlStatement
 hi link cshtmlStatement Special
@@ -85,17 +98,21 @@ hi link cshtmlJsCsharpBlockLong cshtmlJsStatement
 hi link cshtmlJsCsharpBlockLongIf cshtmlJsStatement
 hi link cshtmlJsCsharpBlockLongElse cshtmlJsStatement
 hi link cshtmlJsCsharpBlockLongElseContinuation cshtmlJsStatement
+hi link cshtmlJsCsharpBlockLongTry cshtmlJsStatement
+hi link cshtmlJsCsharpBlockLongCatch cshtmlJsStatement
+hi link cshtmlJsCsharpBlockLongFinally cshtmlJsStatement
 hi link cshtmlJsCsharpBlockLongParam cshtmlJsStatement
 hi link cshtmlJsCsharpBlockLongParamIf cshtmlJsStatement
+hi link cshtmlJsCsharpBlockLongParamTry cshtmlJsStatement
 hi link cshtmlJsStatement cshtmlStatement
 hi link javascript PreProc
 
 "syn sync fromstart
 syn sync clear
 syn sync minlines=1
-syn sync match csBlock  grouphere cshtmlCsharpBlock "@{"
-syn sync match csBlock  grouphere cshtmlCsharpBlockLongParam "^\s*@\(using\|foreach\|for\)"
-syn sync match csBlock  grouphere cshtmlCsharpBlockLongIfParam "^\s*@if"
+"syn sync match csBlock  grouphere cshtmlCsharpBlock "@{"
+"syn sync match csBlock  grouphere cshtmlCsharpBlockLongParam "^\s*@\(using\|foreach\|for\|try\)"
+"syn sync match csBlock  grouphere cshtmlCsharpBlockLongIfParam "^\s*@if"
 syn sync match csScript grouphere javaScript "<script"
 syn sync match csHtml   grouphere cshtmlInnerHtmlBlock "\C\(<\(bool\|byte\|sbyte\|char\|decimal\|double\|float\|int\|uint\|long\|ulong\|object\|short\|ushort\|string\)\@!\([a-z]\w\+\)\)"
 
